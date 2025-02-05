@@ -1,6 +1,6 @@
 # Node-RED OpenTelemetry
 
-[![license: AGPLv3](https://img.shields.io/badge/license-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![license: LGPLv3](https://img.shields.io/badge/license-LGPL--3.0--or--later-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![GitHub release](https://img.shields.io/github/release/nioc/node-red-contrib-opentelemetry.svg)](https://github.com/nioc/node-red-contrib-opentelemetry/releases/latest)
 [![GitHub Lint Workflow Status](https://img.shields.io/github/actions/workflow/status/nioc/node-red-contrib-opentelemetry/commit.yml?label=lint)](https://github.com/nioc/node-red-contrib-opentelemetry/actions/workflows/commit.yml)
 [![GitHub Publish Workflow Status](https://img.shields.io/github/actions/workflow/status/nioc/node-red-contrib-opentelemetry/publish.yml?label=publish)](https://github.com/nioc/node-red-contrib-opentelemetry/actions/workflows/publish.yml)
@@ -12,7 +12,7 @@ Distributed tracing with OpenTelemetry SDK and Prometheus metrics exporter for N
 
 ### Traces
 
-- based on [messaging hooks](https://nodered.org/docs/api/hooks/messaging):
+- based on [OpenTelemetry JavaScript framework](https://github.com/open-telemetry/opentelemetry-js) and [Node-RED messaging hooks](https://nodered.org/docs/api/hooks/messaging):
   - create spans on `onSend(source)` and `postDeliver(destination)` events,
   - end spans on `onComplete` and `postDeliver(source)` events.
 - trace includes:
@@ -117,6 +117,12 @@ See the [releases](https://github.com/nioc/node-red-contrib-opentelemetry/releas
 
 See also the full list of [contributors](https://github.com/nioc/node-red-contrib-opentelemetry/graphs/contributors) to this project.
 
+## Direct dependencies
+
+- **[@opentelemetry](https://github.com/open-telemetry/opentelemetry-js)** (Apache-2.0)
+- **[jmespath](https://github.com/jmespath/jmespath.js)** (Apache-2.0)
+- **[on-finished](https://github.com/jshttp/on-finished)** (MIT)
+
 ## License
 
-This project is licensed under the GNU Affero General Public License v3.0 - see the [LICENSE](LICENSE.md) file for details
+This project is licensed under the GNU Lesser General Public License v3.0 - see the [LICENSE](LICENSE.md) file for details
