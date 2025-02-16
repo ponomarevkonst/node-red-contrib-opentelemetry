@@ -1,0 +1,102 @@
+<script type="text/javascript">
+    RED.nodes.registerType('Loki Log',{
+        category: 'logging',
+        color: '#68BC00',
+        defaults: {
+            name: {value:""},
+            url: {
+                value: "http://localhost:3100/loki/api/v1/push",
+                required: true,
+                validate: function(v) {
+                    try {
+                        new URL(v)
+                        return true
+                    } catch(e) {
+                        return false
+                    }
+                }
+            },
+            serviceName: {
+                value: "node-red",
+                required: true
+            },
+            labels: {
+                value: "",
+                validate: function(v) {
+                    if (!v) return true
+                    return v.split(',').every(label => {
+                        const parts = label.split('=')
+                        return parts.length === 2 && parts[0].trim() && parts[1].trim()
+                    })
+                }
+            }
+        },
+        icon: "loki.svg",
+        label: function() {
+            return this.name || "Loki";
+        },
+        paletteLabel: "Loki"
+    });
+</script>
+
+<script type="text/html" data-template-name="loki-exporter">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> Loki URL</label>
+        <input type="text" id="node-input-url" 
+               placeholder="http://localhost:3100/loki/api/v1/push"
+               style="width: 70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-serviceName"><i class="fa fa-cube"></i> Service Name</label>
+        <input type="text" id="node-input-serviceName" 
+               placeholder="node-red"
+               style="width: 70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-labels"><i class="fa fa-tags"></i> Labels</label>
+        <input type="text" id="node-input-labels" 
+               placeholder="environment=production,app=myapp"
+               style="width: 70%">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="loki-exporter">
+    <p>A node that exports logs to Grafana Loki with OpenTelemetry context.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string | object</span></dt>
+        <dd>The log message to send to Loki.</dd>
+        
+        <dt class="optional">traceId <span class="property-type">string</span></dt>
+        <dd>Optional OpenTelemetry trace ID to override automatic context.</dd>
+        
+        <dt class="optional">spanId <span class="property-type">string</span></dt>
+        <dd>Optional OpenTelemetry span ID to override automatic context.</dd>
+    </dl>
+
+    <h3>Details</h3>
+    <p>This node sends logs to Grafana Loki with the following features:</p>
+    <ul>
+        <li>Automatic OpenTelemetry context injection (trace ID, span ID)</li>
+        <li>Configurable static labels</li>
+        <li>Connection status indication</li>
+        <li>Service name configuration</li>
+    </ul>
+
+    <h3>Configuration</h3>
+    <dl class="message-properties">
+        <dt>URL</dt>
+        <dd>The Loki push API endpoint URL</dd>
+        
+        <dt>Service Name</dt>
+        <dd>Name of the service sending logs</dd>
+        
+        <dt>Labels</dt>
+        <dd>Static labels to add to all logs in key=value format, comma-separated</dd>
+    </dl>
+</script> 
