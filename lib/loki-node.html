@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('Loki Log',{
+    RED.nodes.registerType('Loki',{
         category: 'logging',
         color: '#68BC00',
         defaults: {
@@ -39,7 +39,7 @@
     });
 </script>
 
-<script type="text/html" data-template-name="loki-exporter">
+<script type="text/html" data-template-name="loki">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
@@ -64,7 +64,7 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="loki-exporter">
+<script type="text/html" data-help-name="loki">
     <p>A node that exports logs to Grafana Loki with OpenTelemetry context.</p>
 
     <h3>Inputs</h3>
