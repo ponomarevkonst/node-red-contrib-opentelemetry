@@ -89,6 +89,15 @@ RED.nodes.registerType('OpenTelemetry', {
         return true
       },
     },
+    authType: {
+      value: 'none',
+    },
+    username: {
+      value: '',
+    },
+    password: {
+      value: '',
+    },
   },
   label: function () {
     return this.name || 'OpenTelemetry'
@@ -139,6 +148,12 @@ RED.nodes.registerType('OpenTelemetry', {
       .forEach((attributeMapping) => {
         $('#node-input-otelAttributeMapping-container').editableList('addItem', { attributeMapping })
       })
+    // Update auth credentials visibility
+    const updateAuth = () => {
+      const isBasic = $('#node-input-authType').val() === 'basic'
+      $('#auth-credentials-username, #auth-credentials-password').toggle(isBasic)
+    }
+    $('#node-input-authType').on('change', updateAuth).trigger('change')
   },
   oneditsave: function () {
     const attributeMappings = []
@@ -165,6 +180,21 @@ RED.nodes.registerType('OpenTelemetry', {
   <div class="form-row" title="OpenTelemetry exporter endpoint">
     <label for="node-input-url"><i class="fa fa-globe"></i> Url</label>
     <input type="text" id="node-input-url" placeholder="http://localhost:4318/v1/traces">
+  </div>
+  <div class="form-row" title="Authentication type">
+    <label for="node-input-authType"><i class="fa fa-lock"></i> Auth Type</label>
+    <select id="node-input-authType">
+      <option value="none">None</option>
+      <option value="basic">Basic</option>
+    </select>
+  </div>
+  <div class="form-row" id="auth-credentials-username" style="display: none;" title="Basic Auth Credentials">
+    <label for="node-input-username"><i class="fa fa-user"></i> Username</label>
+    <input type="text" id="node-input-username" placeholder="Username">
+  </div>
+  <div class="form-row" id="auth-credentials-password" style="display: none;" title="Basic Auth Credentials">
+    <label for="node-input-password"><i class="fa fa-key"></i> Password</label>
+    <input type="password" id="node-input-password" placeholder="Password">
   </div>
   <div class="form-row" title="OpenTelemetry exporter protocol">
     <label for="node-input-protocol"><i class="fa fa-globe"></i> Protocol</label>
